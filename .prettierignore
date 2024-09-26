@@ -1,0 +1,4 @@
+.prettierrc
+*.config.js
+*.json
+*.css
