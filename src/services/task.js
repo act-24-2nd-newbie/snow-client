@@ -13,3 +13,20 @@ export async function createTask(data) {
     body: JSON.stringify(data),
   });
 }
+
+/**
+ * getTasks
+ * @returns {Promise<{
+ * id: number;
+ * contents: string;
+ * isDone: boolean;
+ * createdAt: number;
+ * modifiedAt: number;
+ * }[]>}
+ */
+export async function getTasks() {
+  const res = await fetch(`${SERVER_URL}/tasks`, {
+    method: 'get',
+  });
+  return await res.json();
+}

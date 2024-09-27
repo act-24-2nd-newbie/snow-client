@@ -21,12 +21,12 @@ export default function Login() {
         <div className="mx-auto w-full max-w-[1280px]">
           <div className="ml-[120px] mr-8">
             <div className="mt-[60px]">
-              <p className="text-welcome-foreground text-2xl">Welcome Newbie!!</p>
-              <p className="text-welcome-foreground text-2xl">
+              <p className="text-2xl text-welcome-foreground">Welcome Newbie!!</p>
+              <p className="text-2xl text-welcome-foreground">
                 MyTodo makes it easy to stay organized and manage your life.
               </p>
             </div>
-            <p className="text-welcome-foreground mt-6 text-[48px] font-bold">What is your name?</p>
+            <p className="mt-6 text-[48px] font-bold text-welcome-foreground">What is your name?</p>
             <div className="mt-4 max-w-[680px]">
               <TextField
                 placeholder="Input your name"
