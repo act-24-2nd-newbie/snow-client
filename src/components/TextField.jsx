@@ -8,12 +8,13 @@ import { useState } from 'react';
  * value?: string;
  * placeholder?: string;
  * maxLength?: number;
+ * border?: boolean;
  * onChange?: (value: string) => void;
  * onSend?: () => void;
  * }} param0
  * @returns
  */
-export default function TextField({ value: outer, placeholder, maxLength, onChange, onSend }) {
+export default function TextField({ value: outer, placeholder, maxLength, border, onChange, onSend }) {
   const [inner, setInner] = useState('');
   const value = outer ?? inner;
 
@@ -40,25 +41,30 @@ export default function TextField({ value: outer, placeholder, maxLength, onChan
   }
 
   return (
-    <div className="flex justify-between gap-2">
-      <div className="relative w-full">
-        <input
-          className="border-b-secondary focus:border-b-primary w-full border-b py-1 outline-none focus:placeholder:invisible"
-          value={value}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          onChange={handleChange}
-          onKeyUp={handleKeyUp}
-        />
-        {value && (
-          <button className="absolute bottom-0 right-0 top-0" onClick={handleClearClick}>
-            <X className="text-secondary h-6 w-6" />
-          </button>
-        )}
+    <div className={!!border && 'border-primary flex h-[60px] items-center rounded border px-4'}>
+      <div className="flex grow justify-between gap-2">
+        <div className="relative w-full">
+          <input
+            className={cx([
+              'w-full py-1 outline-none focus:placeholder:invisible',
+              !border && 'border-b-secondary focus:border-b-primary border-b',
+            ])}
+            value={value}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            onChange={handleChange}
+            onKeyUp={handleKeyUp}
+          />
+          {value && (
+            <button className="absolute bottom-0 right-0 top-0" onClick={handleClearClick}>
+              <X className="text-secondary h-6 w-6" />
+            </button>
+          )}
+        </div>
+        <button type="button" disabled={!value} onClick={handleSendClick}>
+          <SendHorizonal className={cx(['h-6 w-6', value ? 'text-primary' : 'text-secondary'])} />
+        </button>
       </div>
-      <button type="button" disabled={!value} onClick={handleSendClick}>
-        <SendHorizonal className={cx(['h-6 w-6', value ? 'text-primary' : 'text-secondary'])} />
-      </button>
     </div>
   );
 }

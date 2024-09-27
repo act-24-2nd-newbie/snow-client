@@ -18,6 +18,9 @@ export default function Login() {
         <div className="mx-auto w-[1280px] border px-4 py-4">
           <TextField placeholder="Input here" value={text} onChange={setText} onSend={handleSend} />
         </div>
+        <div className="mx-auto w-[1280px] border px-4 py-4">
+          <TextField placeholder="Input here" value={text} border={true} onChange={setText} onSend={handleSend} />
+        </div>
       </main>
     </>
   );
