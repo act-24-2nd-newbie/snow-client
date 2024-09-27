@@ -18,13 +18,15 @@ export default function Login() {
     <>
       <Header />
       <main className="flex flex-col">
-        <div className="mx-auto w-[1280px]">
-          <div className="ml-[120px]">
+        <div className="mx-auto w-full max-w-[1280px]">
+          <div className="ml-[120px] mr-8">
             <div className="mt-[60px]">
-              <p className="text-welcome text-2xl">Welcome Newbie!!</p>
-              <p className="text-welcome text-2xl">MyTodo makes it easy to stay organized and manage your life.</p>
+              <p className="text-welcome-foreground text-2xl">Welcome Newbie!!</p>
+              <p className="text-welcome-foreground text-2xl">
+                MyTodo makes it easy to stay organized and manage your life.
+              </p>
             </div>
-            <p className="text-welcome mt-6 text-[48px] font-bold">What is your name?</p>
+            <p className="text-welcome-foreground mt-6 text-[48px] font-bold">What is your name?</p>
             <div className="mt-4 max-w-[680px]">
               <TextField
                 placeholder="Input your name"

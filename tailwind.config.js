@@ -9,7 +9,8 @@ export default {
         header: '#6C77A7',
         primary: '#2A82F0',
         secondary: '#CCCCCC',
-        welcome: '#2C3E50',
+        'welcome-foreground': '#2C3E50',
+        tasks: '#F4F4F4',
       },
       fontFamily: {
         sans: ['Noto Sans KR', ...fontFamily.sans],
