@@ -1,6 +1,6 @@
 import { cx } from 'class-variance-authority';
 import { SendHorizonal, X } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 /**
  * TextField component
@@ -16,6 +16,8 @@ import { useState } from 'react';
  */
 export default function TextField({ value: outer, placeholder, maxLength, border, onChange, onSend }) {
   const [inner, setInner] = useState('');
+  /** @type {import('react').MutableRefObject<HTMLInputElement>}  */
+  const inputRef = useRef(null);
   const value = outer ?? inner;
 
   /** @param {import('react').KeyboardEvent<HTMLInputElement>} e */
@@ -27,6 +29,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
   function handleClearClick() {
     setInner('');
     onChange?.('');
+    inputRef.current?.focus();
   }
 
   /** @param {import('react').KeyboardEvent<HTMLInputElement>} e */
@@ -46,7 +49,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
         <div className="relative w-full">
           <input
             className={cx([
-              'w-full py-1 outline-none focus:placeholder:invisible',
+              'w-full py-1 pr-6 outline-none focus:placeholder:invisible',
               !border && 'border-b-secondary focus:border-b-primary border-b',
             ])}
             value={value}
@@ -54,6 +57,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
             maxLength={maxLength}
             onChange={handleChange}
             onKeyUp={handleKeyUp}
+            ref={inputRef}
           />
           {value && (
             <button className="absolute bottom-0 right-0 top-0" onClick={handleClearClick}>

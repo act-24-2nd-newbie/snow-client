@@ -1,13 +1,17 @@
 import Header from '@/components/Header';
 import TextField from '@/components/TextField';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const [text, setText] = useState('');
+  const [name, setName] = useState('');
+  const navigate = useNavigate();
 
   function handleSend() {
-    console.log(text);
-    setText('');
+    if (name) {
+      sessionStorage.setItem('name', name);
+      navigate('/home');
+    }
   }
 
   return (
@@ -22,7 +26,13 @@ export default function Login() {
             </div>
             <p className="text-welcome mt-6 text-[48px] font-bold">What is your name?</p>
             <div className="mt-4 max-w-[680px]">
-              <TextField placeholder="Input your name" />
+              <TextField
+                placeholder="Input your name"
+                value={name}
+                onChange={setName}
+                onSend={handleSend}
+                maxLength={20}
+              />
             </div>
           </div>
         </div>
