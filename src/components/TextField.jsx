@@ -41,7 +41,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
   }
 
   return (
-    <div className={!!border && 'border-primary flex h-[60px] items-center rounded border px-4'}>
+    <div className={border ? 'border-primary flex h-[60px] items-center rounded border px-4' : 'contents'}>
       <div className="flex grow justify-between gap-2">
         <div className="relative w-full">
           <input

@@ -14,12 +14,17 @@ export default function Login() {
     <>
       <Header />
       <main className="flex flex-col">
-        <div className="mx-auto w-[1280px] border">Login</div>
-        <div className="mx-auto w-[1280px] border px-4 py-4">
-          <TextField placeholder="Input here" value={text} onChange={setText} onSend={handleSend} />
-        </div>
-        <div className="mx-auto w-[1280px] border px-4 py-4">
-          <TextField placeholder="Input here" value={text} border={true} onChange={setText} onSend={handleSend} />
+        <div className="mx-auto w-[1280px]">
+          <div className="ml-[120px]">
+            <div className="mt-[60px]">
+              <p className="text-welcome text-2xl">Welcome Newbie!!</p>
+              <p className="text-welcome text-2xl">MyTodo makes it easy to stay organized and manage your life.</p>
+            </div>
+            <p className="text-welcome mt-6 text-[48px] font-bold">What is your name?</p>
+            <div className="mt-4 max-w-[680px]">
+              <TextField placeholder="Input your name" />
+            </div>
+          </div>
         </div>
       </main>
     </>
