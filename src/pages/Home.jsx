@@ -1,20 +1,26 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import Header from '@/components/Header';
 import TextField from '@/components/TextField';
-import { useEffect, useState } from 'react';
 import EmptyTasks from '@/components/EmptyTasks';
+import { createTask } from '@/services/task';
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
-  const name = sessionStorage.getItem('name');
-  const navigate = useNavigate();
+  const [newTask, setNewTask] = useState('');
 
-  useEffect(() => {
-    if (!name) {
-      navigate('/');
+  const name = sessionStorage.getItem('name');
+
+  async function handleSend() {
+    if (newTask.trim()) {
+      try {
+        await createTask({ contents: newTask });
+        setNewTask('');
+      } catch (e) {
+        console.error(e);
+      }
     }
-  }, [navigate, name]);
+  }
 
   return (
     <>
@@ -29,7 +35,13 @@ export default function Home() {
             <p className="text-welcome-foreground text-2xl">task(s) Today!</p>
           </div>
           <div className="mx-[60px] mb-6 mt-4">
-            <TextField placeholder="Enter your task" maxLength={100} />
+            <TextField
+              placeholder="Enter your task"
+              maxLength={100}
+              value={newTask}
+              onChange={setNewTask}
+              onSend={handleSend}
+            />
           </div>
         </div>
         {/* Tasks Wrapper */}
