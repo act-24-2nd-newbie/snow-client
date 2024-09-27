@@ -6,7 +6,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        header: '#6C77A7'
+        header: '#6C77A7',
+        primary: '#2A82F0',
+        secondary: '#CCCCCC',
       },
       fontFamily: {
         sans: ['Noto Sans KR', ...fontFamily.sans],

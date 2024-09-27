@@ -1,13 +1,23 @@
 import { Link } from 'react-router-dom';
 import { ListTodo } from 'lucide-react';
+import { useMemo } from 'react';
 
 function Clock() {
-  return <span className="font-bold text-white">01/01 (Sun)</span>;
+  const getTime = useMemo(() => {
+    const now = new Date();
+    const dayOfWeeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
+    const month = `${now.getMonth() + 1}`.padStart(2, '0');
+    const day = `${now.getDate()}`.padStart(2, '0');
+    const date = dayOfWeeks[now.getDay()];
+    return `${month}/${day} (${date})`;
+  }, []);
+
+  return <span className="font-bold text-white">{getTime}</span>;
 }
 
 export default function Header() {
   return (
-    <header className="bg-header h-[48px]">
+    <header className="bg-header h-[48px] shrink-0">
       <nav className="mx-auto flex h-full max-w-[1280px] justify-between px-4">
         {/* LEFT */}
         <div className="flex items-center gap-3">
