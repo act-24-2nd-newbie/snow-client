@@ -1,6 +1,6 @@
 import { cx } from 'class-variance-authority';
 import { SendHorizonal, X } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * TextField component
@@ -9,16 +9,21 @@ import { useRef, useState } from 'react';
  * placeholder?: string;
  * maxLength?: number;
  * border?: boolean;
+ * selected? : boolean;
  * onChange?: (value: string) => void;
  * onSend?: () => void;
  * }} param0
  * @returns
  */
-export default function TextField({ value: outer, placeholder, maxLength, border, onChange, onSend }) {
+export default function TextField({ value: outer, placeholder, maxLength, border, selected, onChange, onSend }) {
   const [inner, setInner] = useState('');
-  /** @type {import('react').MutableRefObject<HTMLInputElement>}  */
+  /** @type {ReturnType<typeof useRef<HTMLInputElement>>}  */
   const inputRef = useRef(null);
   const value = outer ?? inner;
+
+  useEffect(() => {
+    selected && inputRef.current && inputRef.current.focus();
+  }, [selected]);
 
   /** @param {import('react').KeyboardEvent<HTMLInputElement>} e */
   function handleChange(e) {
@@ -44,13 +49,13 @@ export default function TextField({ value: outer, placeholder, maxLength, border
   }
 
   return (
-    <div className={border ? 'border-primary flex h-[60px] items-center rounded border px-4' : 'contents'}>
+    <div className={border ? 'flex h-[60px] items-center rounded border border-primary bg-white px-4' : 'contents'}>
       <div className="flex grow justify-between gap-2">
         <div className="relative w-full">
           <input
             className={cx([
               'w-full py-1 pr-6 outline-none focus:placeholder:invisible',
-              !border && 'border-b-secondary focus:border-b-primary border-b',
+              !border && 'border-b border-b-secondary focus:border-b-primary',
             ])}
             value={value}
             placeholder={placeholder}
@@ -61,7 +66,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
           />
           {value && (
             <button className="absolute bottom-0 right-0 top-0" onClick={handleClearClick}>
-              <X className="text-secondary h-6 w-6" />
+              <X className="h-6 w-6 text-secondary" />
             </button>
           )}
         </div>

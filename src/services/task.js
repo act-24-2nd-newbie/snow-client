@@ -30,3 +30,21 @@ export async function getTasks() {
   });
   return await res.json();
 }
+
+/**
+ * updateTask
+ * @param {number} id
+ * @param {{
+ * contents?: string;
+ * isDone?: boolean;
+ * }} param1
+ */
+export async function updateTask(id, { contents, isDone }) {
+  return await fetch(`${SERVER_URL}/tasks/${id}`, {
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ contents, isDone }),
+  });
+}

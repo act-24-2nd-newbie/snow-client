@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import TextField from '@/components/TextField';
 import EmptyTasks from '@/components/EmptyTasks';
-import { createTask, getTasks } from '@/services/task';
+import { createTask, getTasks, updateTask } from '@/services/task';
 import Tasks from '@/components/Tasks';
 
 export default function Home() {
@@ -18,8 +18,8 @@ export default function Home() {
 
   async function fetchData() {
     try {
-      const data = await getTasks();
-      setTasks(data);
+      const items = await getTasks();
+      setTasks(items.map((item) => ({ ...item, selected: false })));
     } catch (e) {
       console.error(e);
     }
@@ -30,13 +30,55 @@ export default function Home() {
       try {
         await createTask({ contents: newTask });
         setNewTask('');
+        fetchData();
       } catch (e) {
         console.error(e);
       }
     }
   }
 
-  async function handleCheckClick() {}
+  /**
+   * @param {number} id
+   * @param {boolean} checked
+   */
+  async function handleCheckClick(id, checked) {
+    await updateTask(id, { isDone: checked });
+    fetchData();
+  }
+
+  /** @param {number} id */
+  function handleClick(id) {
+    setTasks(
+      tasks.map((item) => ({
+        ...item,
+        selected: !item.isDone && item.id === id,
+      })),
+    );
+  }
+
+  /**
+   * @param {number} id
+   * @param {string} value
+   */
+  function handleChange(id, value) {
+    setTasks(
+      tasks.map((item) => ({
+        ...item,
+        changedContents: item.id === id ? value : item.contents,
+      })),
+    );
+  }
+
+  /** @param {number} id  */
+  async function handleTaskSend(id) {
+    const target = tasks.filter((item) => item.id === id)[0];
+    if (target) {
+      if (target.changedContents && target.contents !== target.changedContents) {
+        await updateTask(id, { contents: target.changedContents });
+        fetchData();
+      }
+    }
+  }
 
   return (
     <>
@@ -62,7 +104,17 @@ export default function Home() {
         </div>
         {/* Tasks Wrapper */}
         <div className="grow bg-tasks">
-          {!tasks.length ? <EmptyTasks /> : <Tasks tasks={tasks} onCheckClick={handleCheckClick} />}
+          {!tasks.length ? (
+            <EmptyTasks />
+          ) : (
+            <Tasks
+              tasks={tasks}
+              onCheckClick={handleCheckClick}
+              onItemClick={handleClick}
+              onItemChange={handleChange}
+              onSend={handleTaskSend}
+            />
+          )}
         </div>
       </main>
     </>

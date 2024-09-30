@@ -3,7 +3,9 @@ import box from '@/assets/ic_checkbox.svg';
 import checkedBox from '@/assets/ic_checkbox_checked.svg';
 
 export default function Checkbox({ checked, onClick }) {
-  function handleClick() {
+  /** @param {import('react').MouseEvent<HTMLButtonElement>} e  */
+  function handleClick(e) {
+    e.stopPropagation();
     onClick?.(!checked);
   }
 
