@@ -56,3 +56,9 @@ export async function deleteTask(id) {
     method: 'delete',
   });
 }
+
+export async function deleteTasks() {
+  return await fetch(`${SERVER_URL}/tasks`, {
+    method: 'delete',
+  });
+}

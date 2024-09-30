@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import Header from '@/components/Header';
-import TextField from '@/components/TextField';
+import Button from '@/components/Button';
 import EmptyTasks from '@/components/EmptyTasks';
-import { createTask, deleteTask, getTasks, updateTask } from '@/services/task';
+import Header from '@/components/Header';
 import Tasks from '@/components/Tasks';
+import TextField from '@/components/TextField';
+import { createTask, deleteTask, deleteTasks, getTasks, updateTask } from '@/services/task';
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
@@ -96,6 +97,11 @@ export default function Home() {
     }
   }
 
+  async function handleDeleteAllClick() {
+    await deleteTasks();
+    setTasks([]);
+  }
+
   return (
     <>
       <Header />
@@ -120,6 +126,12 @@ export default function Home() {
         </div>
         {/* Tasks Wrapper */}
         <div className="grow bg-tasks">
+          <div className="overflow-y mx-auto mt-6 flex w-full max-w-[1280px] justify-between px-[52px]">
+            <div></div>
+            <Button variant="ghost" disabled={!tasks.length} onClick={handleDeleteAllClick}>
+              Clear All
+            </Button>
+          </div>
           {!tasks.length ? (
             <EmptyTasks />
           ) : (

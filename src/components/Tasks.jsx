@@ -98,8 +98,8 @@ export default function Tasks({ tasks, onCheckClick, onDeleteClick, onItemClick,
   }, [onClear]);
 
   return (
-    <div className="overflow-y mx-auto w-full max-w-[1280px] px-[52px]" ref={ref}>
-      <ul className="mt-4 flex flex-col gap-2">
+    <div className="overflow-y mx-auto mt-4 w-full max-w-[1280px] px-[52px]" ref={ref}>
+      <ul className="flex flex-col gap-2">
         {tasks.map((task) => (
           <TaskItem
             key={task.id}
