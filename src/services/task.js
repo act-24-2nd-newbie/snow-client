@@ -16,14 +16,9 @@ export async function createTask(data) {
 
 /**
  * getTasks
- * @returns {Promise<{
- * id: number;
- * contents: string;
- * isDone: boolean;
- * createdAt: number;
- * modifiedAt: number;
- * }[]>}
+ * @returns {Promise<Task>[]>}
  */
+
 export async function getTasks() {
   const res = await fetch(`${SERVER_URL}/tasks`, {
     method: 'get',

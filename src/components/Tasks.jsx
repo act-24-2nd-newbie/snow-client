@@ -1,23 +1,16 @@
-import { Trash2 } from 'lucide-react';
-import Checkbox from './Checkbox';
-import { getDateString } from '@/utils/dateUtil';
 import { cx } from 'class-variance-authority';
+import { Trash2 } from 'lucide-react';
+
+import { getDateString } from '@/utils/dateUtil';
+import Checkbox from './Checkbox';
 import TextField from './TextField';
 
-/**
- * @typedef {{
- * id: number;
- * contents: string;
- * isDone: boolean;
- * createdAt: number;
- * modifiedAt: number;
- * }} Task
- */
+/** @typedef {Task & {changedContents?: string}} TaskWithChange */
 
 /**
  * TaskItem
  * @param {{
- * task: Task,
+ * task: TaskWithChange,
  * selected: boolean,
  * onCheckClick?: () => void;
  * onDeleteClick?: () => void;
@@ -70,7 +63,7 @@ function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChan
 /**
  * Tasks
  * @param {{
- * tasks: Task[],
+ * tasks: (TaskWithChange & {selected: boolean})[],
  * onCheckClick?: (id: number, checked: boolean) => void;
  * onDeleteClick?: (id: number) => void;
  * onItemClick?: (id: number) => void;

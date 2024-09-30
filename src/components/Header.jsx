@@ -1,6 +1,6 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ListTodo } from 'lucide-react';
-import { useMemo } from 'react';
 
 function Clock() {
   const getTime = useMemo(() => {
@@ -17,7 +17,7 @@ function Clock() {
 
 export default function Header() {
   return (
-    <header className="bg-header h-[48px] shrink-0">
+    <header className="h-[48px] shrink-0 bg-header">
       <nav className="mx-auto flex h-full max-w-[1280px] justify-between px-4">
         {/* LEFT */}
         <div className="flex items-center gap-3">

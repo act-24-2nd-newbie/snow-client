@@ -1,4 +1,5 @@
 import { cx } from 'class-variance-authority';
+
 import box from '@/assets/ic_checkbox.svg';
 import checkedBox from '@/assets/ic_checkbox_checked.svg';
 
