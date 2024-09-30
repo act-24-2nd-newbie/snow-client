@@ -20,13 +20,20 @@ import TextField from './TextField';
  * task: Task,
  * selected: boolean,
  * onCheckClick?: () => void;
+ * onDeleteClick?: () => void;
  * onClick?: () => void;
  * onChange?: (value) => void;
  * onSend?: () => void;
  * }} param0
  * @returns
  */
-function TaskItem({ task, selected, onCheckClick, onClick, onChange, onSend }) {
+function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChange, onSend }) {
+  /** @param {import('react').MouseEvent<HTMLButtonElement>} e  */
+  function handleDeleteClick(e) {
+    e.stopPropagation();
+    onDeleteClick?.();
+  }
+
   if (selected) {
     return (
       <li className="contents">
@@ -51,6 +58,7 @@ function TaskItem({ task, selected, onCheckClick, onClick, onChange, onSend }) {
         <button
           type="buton"
           className="flex h-6 w-6 items-center justify-center rounded-full bg-red-500 hover:bg-red-700"
+          onClick={handleDeleteClick}
         >
           <Trash2 className="h-4 w-4 text-white" />
         </button>
@@ -64,13 +72,14 @@ function TaskItem({ task, selected, onCheckClick, onClick, onChange, onSend }) {
  * @param {{
  * tasks: Task[],
  * onCheckClick?: (id: number, checked: boolean) => void;
+ * onDeleteClick?: (id: number) => void;
  * onItemClick?: (id: number) => void;
  * onItemChange?: (id: number, value: string) => void;
  * onSend?: (id: number) => void;
  * }} param0
  * @returns
  */
-export default function Tasks({ tasks, onCheckClick, onItemClick, onItemChange, onSend }) {
+export default function Tasks({ tasks, onCheckClick, onDeleteClick, onItemClick, onItemChange, onSend }) {
   return (
     <div className="overflow-y mx-auto w-full max-w-[1280px] px-[52px]">
       <ul className="mt-4 flex flex-col gap-2">
@@ -81,6 +90,7 @@ export default function Tasks({ tasks, onCheckClick, onItemClick, onItemChange, 
             selected={task.selected}
             onCheckClick={(checked) => onCheckClick?.(task.id, checked)}
             onClick={() => onItemClick?.(task.id)}
+            onDeleteClick={() => onDeleteClick?.(task.id)}
             onChange={(value) => onItemChange?.(task.id, value)}
             onSend={() => onSend?.(task.id)}
           />

@@ -48,3 +48,17 @@ export async function updateTask(id, { contents, isDone }) {
     body: JSON.stringify({ contents, isDone }),
   });
 }
+
+/**
+ * deleteTask
+ * @param {number} id
+ * @param {{
+ * contents?: string;
+ * isDone?: boolean;
+ * }} param1
+ */
+export async function deleteTask(id) {
+  return await fetch(`${SERVER_URL}/tasks/${id}`, {
+    method: 'delete',
+  });
+}

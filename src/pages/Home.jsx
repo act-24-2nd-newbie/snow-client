@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import TextField from '@/components/TextField';
 import EmptyTasks from '@/components/EmptyTasks';
-import { createTask, getTasks, updateTask } from '@/services/task';
+import { createTask, deleteTask, getTasks, updateTask } from '@/services/task';
 import Tasks from '@/components/Tasks';
 
 export default function Home() {
@@ -43,6 +43,12 @@ export default function Home() {
    */
   async function handleCheckClick(id, checked) {
     await updateTask(id, { isDone: checked });
+    fetchData();
+  }
+
+  /** @param {number} id  */
+  async function handleDeleteClick(id) {
+    await deleteTask(id);
     fetchData();
   }
 
@@ -110,6 +116,7 @@ export default function Home() {
             <Tasks
               tasks={tasks}
               onCheckClick={handleCheckClick}
+              onDeleteClick={handleDeleteClick}
               onItemClick={handleClick}
               onItemChange={handleChange}
               onSend={handleTaskSend}
