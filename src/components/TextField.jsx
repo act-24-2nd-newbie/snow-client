@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { cx } from 'class-variance-authority';
 import { SendHorizonal, X } from 'lucide-react';
 
@@ -16,6 +16,7 @@ import { SendHorizonal, X } from 'lucide-react';
  * @returns
  */
 export default function TextField({ value: outer, placeholder, maxLength, border, selected, onChange, onSend }) {
+  const id = useId();
   const [inner, setInner] = useState('');
   /** @type {ReturnType<typeof useRef<HTMLInputElement>>}  */
   const inputRef = useRef(null);
@@ -31,7 +32,10 @@ export default function TextField({ value: outer, placeholder, maxLength, border
     onChange?.(e.target.value);
   }
 
-  function handleClearClick() {
+  /** @param {import('react').MouseEvent<HTMLButtonElement>} e */
+  function handleClearClick(e) {
+    e.stopPropagation();
+
     setInner('');
     onChange?.('');
     inputRef.current?.focus();
@@ -62,6 +66,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
             maxLength={maxLength}
             onChange={handleChange}
             onKeyUp={handleKeyUp}
+            id={id}
             ref={inputRef}
           />
           {value && (

@@ -75,6 +75,16 @@ export default function Home() {
     );
   }
 
+  function handleClickedItemClear() {
+    setTasks(
+      tasks.map((items) => ({
+        ...items,
+        selected: false,
+        changedContents: undefined,
+      })),
+    );
+  }
+
   /** @param {number} id  */
   async function handleTaskSend(id) {
     const target = tasks.filter((item) => item.id === id)[0];
@@ -120,6 +130,7 @@ export default function Home() {
               onItemClick={handleClick}
               onItemChange={handleChange}
               onSend={handleTaskSend}
+              onClear={handleClickedItemClear}
             />
           )}
         </div>
