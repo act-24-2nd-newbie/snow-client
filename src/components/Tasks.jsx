@@ -12,7 +12,7 @@ import { useEffect, useRef } from 'react';
  * @typedef {object} TaskItemProps
  * @prop {Task & { changedContents?: string }} task
  * @prop {boolean} selected
- * @prop {() => void} [onCheckClick]
+ * @prop {(checked: boolean) => void} [onCheckClick]
  * @prop {() => void} [onDeleteClick]
  * @prop {() => void} [onClick]
  * @prop {(value: string) => void} [onChange]
@@ -54,7 +54,7 @@ function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChan
           {task.createdAt !== task.modifiedAt && ` (Modified: ${getDateString(task.modifiedAt)})`}
         </span>
         <button
-          type="buton"
+          type="button"
           className="flex h-6 w-6 items-center justify-center rounded-full bg-red-500 hover:bg-red-700"
           onClick={handleDeleteClick}
         >
@@ -84,8 +84,9 @@ export default function Tasks({ tasks, onCheckClick, onDeleteClick, onItemClick,
   const ref = useRef(null);
 
   useEffect(() => {
-    /** @param {import('react').MouseEvent<HTMLDivElement>} e */
+    /** @param {MouseEvent} e */
     function handleOutsideClick(e) {
+      // @ts-ignore
       if (ref.current && !ref.current.contains(e.target)) {
         onClear?.();
       }
@@ -110,7 +111,6 @@ export default function Tasks({ tasks, onCheckClick, onDeleteClick, onItemClick,
             onDeleteClick={() => onDeleteClick?.(task.id)}
             onChange={(value) => onItemChange?.(task.id, value)}
             onSend={() => onSend?.(task.id)}
-            onClear={onClear}
           />
         ))}
       </ul>

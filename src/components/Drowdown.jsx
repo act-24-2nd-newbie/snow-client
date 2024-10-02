@@ -1,6 +1,6 @@
 import { cx } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * Dropdown component
@@ -14,7 +14,23 @@ import { useState } from 'react';
  */
 export default function Dropdown({ items, value, onChange }) {
   const [open, setOpen] = useState(false);
+  /** @type {ReturnType<typeof useRef<HTMLDivElement>>} */
+  const ref = useRef(null);
+
   const selected = items && items.filter((item) => item.value == value)[0];
+
+  useEffect(() => {
+    /** @param {MouseEvent} e */
+    function handleClick(e) {
+      // @ts-ignore
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
 
   function handleClick() {
     setOpen((o) => !o);
@@ -26,11 +42,11 @@ export default function Dropdown({ items, value, onChange }) {
   }
 
   return (
-    <div className="relative w-full" style={{ '--height': `${items * 40}px` }}>
+    <div className="relative w-full" ref={ref}>
       <button
         type="button"
         className={cx(
-          'flex h-10 w-full items-center justify-between bg-white px-3 shadow',
+          'flex h-10 w-full items-center justify-between bg-white px-3 shadow-md',
           open ? 'rounded-t' : 'rounded',
         )}
         onClick={handleClick}
@@ -40,7 +56,7 @@ export default function Dropdown({ items, value, onChange }) {
       </button>
       <ul
         className={cx(
-          'absolute h-[var(--height)] w-full origin-top overflow-hidden rounded-b bg-white shadow transition-transform',
+          'absolute w-full origin-top overflow-hidden rounded-b bg-white shadow-md transition-transform',
           open ? 'scale-y-100' : 'scale-y-0',
         )}
       >
