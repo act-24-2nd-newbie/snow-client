@@ -6,10 +6,17 @@ import Header from '@/components/Header';
 import Tasks from '@/components/Tasks';
 import TextField from '@/components/TextField';
 import { createTask, deleteTask, deleteTasks, getTasks, updateTask } from '@/services/task';
+import Dropdown from '@/components/Drowdown';
+
+const SORT_ORDER = [
+  { label: 'Oldest', value: '1' },
+  { label: 'Latest', value: '2' },
+];
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
+  const [sortOrder, setSortOrder] = useState(SORT_ORDER[0].value);
 
   const name = sessionStorage.getItem('name');
 
@@ -102,6 +109,10 @@ export default function Home() {
     setTasks([]);
   }
 
+  function handleDropdownChange(v) {
+    setSortOrder(v);
+  }
+
   return (
     <>
       <Header />
@@ -127,7 +138,9 @@ export default function Home() {
         {/* Tasks Wrapper */}
         <div className="flex h-full grow flex-col overflow-y-auto bg-tasks py-6">
           <div className="mx-auto flex w-full max-w-[1280px] justify-between px-[52px]">
-            <div></div>
+            <div className="w-[120px]">
+              <Dropdown items={SORT_ORDER} value={sortOrder} onChange={handleDropdownChange} />
+            </div>
             <Button variant="ghost" disabled={!tasks.length} onClick={handleDeleteAllClick}>
               Clear All
             </Button>
