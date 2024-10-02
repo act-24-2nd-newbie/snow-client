@@ -2,6 +2,7 @@ import { createBrowserRouter, createRoutesFromElements, redirect, Route } from '
 import App from './App';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Showroom from './pages/Showroom';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ export const router = createBrowserRouter(
           return null;
         }}
       />
+      <Route path="/showroom" element={<Showroom />} />
     </Route>,
   ),
 );

@@ -2,8 +2,13 @@
     "compilerOptions": {
         "module": "CommonJS",
         "target": "ES2023",
-        "baseUrl": "src",
+        
+        /* Type checking */
         "jsx": "react-jsx",
+        "checkJs": true,
+        
+        /* Alias */
+        "baseUrl": "src",
         "paths": {
             "@/*": ["./*"]
         }

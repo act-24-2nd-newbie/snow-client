@@ -1,4 +1,3 @@
-// @ts-check
 import Header from '@/components/Header';
 import HeaderButton from '@/components/HeaderButton';
 import TextField from '@/components/TextField';

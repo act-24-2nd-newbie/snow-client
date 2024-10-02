@@ -1,4 +1,3 @@
-// @ts-check
 import { useEffect, useMemo, useState } from 'react';
 
 import Button from '@/components/Button';

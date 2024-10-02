@@ -59,7 +59,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
         <div className="relative w-full">
           <input
             className={cx([
-              'w-full py-1 pr-6 outline-none focus:placeholder:invisible',
+              'w-full py-1 pr-6 outline-none transition-colors focus:placeholder:invisible',
               !border && 'border-b border-b-secondary focus:border-b-primary',
             ])}
             value={value}
@@ -77,7 +77,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
           )}
         </div>
         <button type="button" disabled={!value} onClick={handleSendClick}>
-          <SendHorizonal className={cx(['h-6 w-6', value ? 'text-primary' : 'text-secondary'])} />
+          <SendHorizonal className={cx(['h-6 w-6 transition-colors', value ? 'text-primary' : 'text-secondary'])} />
         </button>
       </div>
     </div>
