@@ -8,12 +8,14 @@ import TextField from '@/components/TextField';
 import { createTask, deleteTask, deleteTasks, getTasks, updateTask } from '@/services/task';
 import Dropdown from '@/components/Drowdown';
 
+/** @satisfies {DropdownItem[]} */
 const SORT_ORDER = [
   { label: 'Oldest', value: '1' },
   { label: 'Latest', value: '2' },
 ];
 
 export default function Home() {
+  /** @type {ReturnType<typeof useState<ExtendedTask[]>>} */
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [sortOrder, setSortOrder] = useState(SORT_ORDER[0].value);
@@ -109,8 +111,14 @@ export default function Home() {
     setTasks([]);
   }
 
+  /** @param {string} v */
   function handleDropdownChange(v) {
     setSortOrder(v);
+    if (v === '1') {
+      setTasks(tasks.toSorted((a, b) => a.createdAt - b.createdAt));
+    } else {
+      setTasks(tasks.toSorted((a, b) => b.createdAt - a.createdAt));
+    }
   }
 
   return (

@@ -6,20 +6,19 @@ import Checkbox from './Checkbox';
 import TextField from './TextField';
 import { useEffect, useRef } from 'react';
 
-/** @typedef {Task & {changedContents?: string}} TaskWithChange */
-
 /**
  * TaskItem
- * @param {{
- * task: TaskWithChange;
- * selected: boolean;
- * onCheckClick?: () => void;
- * onDeleteClick?: () => void;
- * onClick?: () => void;
- * onChange?: (value) => void;
- * onSend?: () => void;
- * }} param0
- * @returns
+ *
+ * @typedef {object} TaskItemProps
+ * @prop {Task & { changedContents?: string }} task
+ * @prop {boolean} selected
+ * @prop {() => void} [onCheckClick]
+ * @prop {() => void} [onDeleteClick]
+ * @prop {() => void} [onClick]
+ * @prop {(value: string) => void} [onChange]
+ * @prop {() => void} [onSend]
+ *
+ * @param {TaskItemProps} param0
  */
 function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChange, onSend }) {
   function handleWrapperClick(e) {
@@ -68,16 +67,17 @@ function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChan
 
 /**
  * Tasks
- * @param {{
- * tasks: (TaskWithChange & {selected: boolean})[],
- * onCheckClick?: (id: number, checked: boolean) => void;
- * onDeleteClick?: (id: number) => void;
- * onItemClick?: (id: number) => void;
- * onItemChange?: (id: number, value: string) => void;
- * onSend?: (id: number) => void;
- * onClear?: () => void;
- * }} param0
- * @returns
+ *
+ * @typedef {Object} TasksProps
+ * @prop {ExtendedTask} tasks
+ * @prop {(id: number, checked: boolean) => void} [onCheckClick]
+ * @prop {(id: number) => void} [onDeleteClick]
+ * @prop {(id: number) => void} [onItemClick]
+ * @prop {(id: number, value: string) => void} [onItemChange]
+ * @prop {(id: number) => void} [onSend]
+ * @prop {() => void} [onClear]
+ *
+ * @param {TasksProps} param0
  */
 export default function Tasks({ tasks, onCheckClick, onDeleteClick, onItemClick, onItemChange, onSend, onClear }) {
   /** @type {ReturnType<typeof useRef<HTMLDivElement>>} */

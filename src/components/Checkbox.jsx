@@ -3,6 +3,15 @@ import { cx } from 'class-variance-authority';
 import box from '@/assets/ic_checkbox.svg';
 import checkedBox from '@/assets/ic_checkbox_checked.svg';
 
+/**
+ * Checkbox component
+ *
+ * @typedef {object} CheckboxProps
+ * @prop {boolean} [checked]
+ * @prop {(checked: boolean) => void} [onClick]
+ *
+ * @param {CheckboxProps} param0
+ */
 export default function Checkbox({ checked, onClick }) {
   /** @param {import('react').MouseEvent<HTMLButtonElement>} e  */
   function handleClick(e) {

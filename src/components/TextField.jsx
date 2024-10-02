@@ -4,16 +4,17 @@ import { SendHorizonal, X } from 'lucide-react';
 
 /**
  * TextField component
- * @param {{
- * value?: string;
- * placeholder?: string;
- * maxLength?: number;
- * border?: boolean;
- * selected? : boolean;
- * onChange?: (value: string) => void;
- * onSend?: () => void;
- * }} param0
- * @returns
+ *
+ * @typedef {Object} TextFieldProps
+ * @prop {string} [value]
+ * @prop {string} [placeholder]
+ * @prop {number} [maxLength]
+ * @prop {boolean} [border]
+ * @prop {boolean} [selected]
+ * @prop {(value: string) => void} [onChange]
+ * @prop {() => void} [onSend]
+ *
+ * @param {TextFieldProps} param0
  */
 export default function TextField({ value: outer, placeholder, maxLength, border, selected, onChange, onSend }) {
   const id = useId();
@@ -26,7 +27,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
     selected && inputRef.current && inputRef.current.focus();
   }, [selected]);
 
-  /** @param {import('react').KeyboardEvent<HTMLInputElement>} e */
+  /** @param {import('react').ChangeEvent<HTMLInputElement>} e */
   function handleChange(e) {
     setInner(e.target.value);
     onChange?.(e.target.value);

@@ -3,10 +3,14 @@ import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 /**
- * @param {Object} param0
- * @param {{ label: string; value: string | number; }[]} param0.items
- * @param {string | number} param0.value
- * @param {(value: string | number) => void} param0.onChange
+ * Dropdown component
+ *
+ * @typedef {object} DropdownProps
+ * @prop {DropdownItem[]} items
+ * @prop {string | number} [value]
+ * @prop {(value: string | number) => void} [onChange]
+ *
+ * @param {DropdownProps} param0
  */
 export default function Dropdown({ items, value, onChange }) {
   const [open, setOpen] = useState(false);
