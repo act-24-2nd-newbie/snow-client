@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
-        "module": "CommonJS",
         "target": "ES2023",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
         
         /* Type checking */
         "jsx": "react-jsx",
@@ -13,5 +14,5 @@
             "@/*": ["./*"]
         }
     },
-    "include": ["src/**/*"]
+    "include": ["src"]
 }

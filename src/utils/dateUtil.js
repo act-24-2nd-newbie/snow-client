@@ -3,7 +3,11 @@ function padNumber(n) {
   return `${n}`.padStart(2, '0');
 }
 
-/** @param {number} dateInMillisecond  */
+/**
+ * Convert date to Date String (MM/DD HH:mm)
+ *
+ * @param {number} dateInMillisecond
+ */
 export function getDateString(dateInMillisecond) {
   const d = new Date(dateInMillisecond * 1000);
   const month = padNumber(d.getMonth() + 1);
@@ -14,6 +18,9 @@ export function getDateString(dateInMillisecond) {
   return `${month}/${day} ${hour}:${min}`;
 }
 
+/**
+ * Get welcome message
+ */
 export function getWelcomeMessage() {
   const h = new Date().getHours();
 
