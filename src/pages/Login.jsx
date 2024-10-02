@@ -1,4 +1,6 @@
+// @ts-check
 import Header from '@/components/Header';
+import HeaderButton from '@/components/HeaderButton';
 import TextField from '@/components/TextField';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +18,7 @@ export default function Login() {
 
   return (
     <>
-      <Header />
+      <Header rightArea={<HeaderButton>Sign up</HeaderButton>} />
       <main className="flex h-full grow flex-col overflow-y-auto py-[60px]">
         <div className="mx-auto w-full max-w-[1280px]">
           <div className="ml-[120px] mr-8">

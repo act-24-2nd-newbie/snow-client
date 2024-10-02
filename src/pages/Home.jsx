@@ -1,3 +1,4 @@
+// @ts-check
 import { useEffect, useMemo, useState } from 'react';
 
 import Button from '@/components/Button';
@@ -7,6 +8,9 @@ import Tasks from '@/components/Tasks';
 import TextField from '@/components/TextField';
 import { createTask, deleteTask, deleteTasks, getTasks, updateTask } from '@/services/task';
 import Dropdown from '@/components/Drowdown';
+import { getWelcomeMessage } from '@/utils/dateUtil';
+import HeaderButton from '@/components/HeaderButton';
+import { useNavigate } from 'react-router-dom';
 
 /** @satisfies {DropdownItem[]} */
 const SORT_ORDER = [
@@ -19,6 +23,7 @@ export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [sortOrder, setSortOrder] = useState(SORT_ORDER[0].value);
+  const navigate = useNavigate();
 
   const sortedTasks = useMemo(() => {
     if (sortOrder === '1') {
@@ -119,6 +124,11 @@ export default function Home() {
     setTasks([]);
   }
 
+  function handleLogoutClick() {
+    sessionStorage.removeItem('name');
+    navigate('/');
+  }
+
   /** @param {string} v */
   function handleDropdownChange(v) {
     setSortOrder(v);
@@ -126,14 +136,18 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Header rightArea={<HeaderButton onClick={handleLogoutClick}>Logout</HeaderButton>} />
       <main className="flex h-full grow flex-col overflow-hidden">
         {/* Top */}
         <div className="mx-auto w-full max-w-[1280px] shrink-0">
           <div className="ml-[60px]">
-            <p className="mt-6 text-2xl text-welcome-foreground">Good afternoon, {name}.</p>
+            <p className="mt-6 text-2xl text-welcome-foreground">
+              {getWelcomeMessage()}, {name}.
+            </p>
             <p className="mt-4 text-2xl text-welcome-foreground">You’ve got</p>
-            <p className="text-[48px] font-bold text-welcome-foreground">2 / 2</p>
+            <p className="text-[48px] font-bold text-welcome-foreground">
+              {tasks.filter((t) => !t.isDone).length} / {tasks.length}
+            </p>
             <p className="text-2xl text-welcome-foreground">task(s) Today!</p>
           </div>
           <div className="mx-[60px] mb-6 mt-4">

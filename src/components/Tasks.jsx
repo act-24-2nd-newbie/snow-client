@@ -69,7 +69,7 @@ function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChan
  * Tasks
  *
  * @typedef {Object} TasksProps
- * @prop {ExtendedTask} tasks
+ * @prop {ExtendedTask[]} tasks
  * @prop {(id: number, checked: boolean) => void} [onCheckClick]
  * @prop {(id: number) => void} [onDeleteClick]
  * @prop {(id: number) => void} [onItemClick]

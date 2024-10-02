@@ -15,7 +15,12 @@ function Clock() {
   return <span className="font-bold text-white">{getTime}</span>;
 }
 
-export default function Header() {
+/**
+ *
+ * @param {{ rightArea?: import('react').ReactNode }} param0
+ * @returns
+ */
+export default function Header({ rightArea }) {
   return (
     <header className="h-[48px] shrink-0 bg-header">
       <nav className="mx-auto flex h-full max-w-[1280px] justify-between px-4">
@@ -31,9 +36,7 @@ export default function Header() {
         {/* RIGHT */}
         <div className="flex items-center gap-4">
           <Clock />
-          <button type="button" className="rounded border px-3 py-1.5 text-sm text-white">
-            Sign up
-          </button>
+          {rightArea}
         </div>
       </nav>
     </header>

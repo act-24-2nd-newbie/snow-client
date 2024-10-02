@@ -1,8 +1,9 @@
+/** @type {string} */
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 /**
  * createTask
- * @param {{contents: string}} data
+ * @param {{ contents: string }} data
  */
 export async function createTask(data) {
   return await fetch(`${SERVER_URL}/tasks`, {
@@ -28,10 +29,7 @@ export async function getTasks() {
 /**
  * updateTask
  * @param {number} id
- * @param {{
- * contents?: string;
- * isDone?: boolean;
- * }} param1
+ * @param {{ contents?: string; isDone?: boolean }} param1
  */
 export async function updateTask(id, { contents, isDone }) {
   return await fetch(`${SERVER_URL}/tasks/${id}`, {
@@ -46,10 +44,6 @@ export async function updateTask(id, { contents, isDone }) {
 /**
  * deleteTask
  * @param {number} id
- * @param {{
- * contents?: string;
- * isDone?: boolean;
- * }} param1
  */
 export async function deleteTask(id) {
   return await fetch(`${SERVER_URL}/tasks/${id}`, {
@@ -57,6 +51,9 @@ export async function deleteTask(id) {
   });
 }
 
+/**
+ * deleteTasks
+ */
 export async function deleteTasks() {
   return await fetch(`${SERVER_URL}/tasks`, {
     method: 'delete',
