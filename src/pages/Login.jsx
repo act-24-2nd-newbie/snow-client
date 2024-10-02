@@ -17,10 +17,10 @@ export default function Login() {
   return (
     <>
       <Header />
-      <main className="flex flex-col">
+      <main className="flex h-full grow flex-col overflow-y-auto py-[60px]">
         <div className="mx-auto w-full max-w-[1280px]">
           <div className="ml-[120px] mr-8">
-            <div className="mt-[60px]">
+            <div className="">
               <p className="text-2xl text-welcome-foreground">Welcome Newbie!!</p>
               <p className="text-2xl text-welcome-foreground">
                 MyTodo makes it easy to stay organized and manage your life.

@@ -105,7 +105,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex grow flex-col">
+      <main className="flex h-full grow flex-col overflow-hidden">
         {/* Top */}
         <div className="mx-auto w-full max-w-[1280px] shrink-0">
           <div className="ml-[60px]">
@@ -125,8 +125,8 @@ export default function Home() {
           </div>
         </div>
         {/* Tasks Wrapper */}
-        <div className="grow bg-tasks">
-          <div className="overflow-y mx-auto mt-6 flex w-full max-w-[1280px] justify-between px-[52px]">
+        <div className="flex h-full grow flex-col overflow-y-auto bg-tasks py-6">
+          <div className="mx-auto flex w-full max-w-[1280px] justify-between px-[52px]">
             <div></div>
             <Button variant="ghost" disabled={!tasks.length} onClick={handleDeleteAllClick}>
               Clear All

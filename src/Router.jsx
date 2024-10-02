@@ -1,14 +1,14 @@
 import { createBrowserRouter, createRoutesFromElements, redirect, Route } from 'react-router-dom';
 import App from './App';
-import Login from './pages/Login';
 import Home from './pages/Home';
+import Login from './pages/Login';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route path="" element={<Login />} />
+    <Route path="" element={<App />}>
+      <Route path="/" element={<Login />} />
       <Route
-        path="home"
+        path="/home"
         element={<Home />}
         loader={() => {
           if (!sessionStorage.getItem('name')) {

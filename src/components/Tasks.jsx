@@ -98,7 +98,7 @@ export default function Tasks({ tasks, onCheckClick, onDeleteClick, onItemClick,
   }, [onClear]);
 
   return (
-    <div className="overflow-y mx-auto mt-4 w-full max-w-[1280px] px-[52px]" ref={ref}>
+    <div className="mx-auto w-full max-w-[1280px] px-[52px] py-4" ref={ref}>
       <ul className="flex flex-col gap-2">
         {tasks.map((task) => (
           <TaskItem
