@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Button from '@/components/Button';
 import EmptyTasks from '@/components/EmptyTasks';
@@ -20,11 +20,19 @@ export default function Home() {
   const [newTask, setNewTask] = useState('');
   const [sortOrder, setSortOrder] = useState(SORT_ORDER[0].value);
 
-  const name = sessionStorage.getItem('name');
+  const sortedTasks = useMemo(() => {
+    if (sortOrder === '1') {
+      return tasks.toSorted((a, b) => a.createdAt - b.createdAt);
+    } else {
+      return tasks.toSorted((a, b) => b.createdAt - a.createdAt);
+    }
+  }, [tasks, sortOrder]);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const name = sessionStorage.getItem('name');
 
   async function fetchData() {
     try {
@@ -114,11 +122,6 @@ export default function Home() {
   /** @param {string} v */
   function handleDropdownChange(v) {
     setSortOrder(v);
-    if (v === '1') {
-      setTasks(tasks.toSorted((a, b) => a.createdAt - b.createdAt));
-    } else {
-      setTasks(tasks.toSorted((a, b) => b.createdAt - a.createdAt));
-    }
   }
 
   return (
@@ -157,7 +160,7 @@ export default function Home() {
             <EmptyTasks />
           ) : (
             <Tasks
-              tasks={tasks}
+              tasks={sortedTasks}
               onCheckClick={handleCheckClick}
               onDeleteClick={handleDeleteClick}
               onItemClick={handleClick}
