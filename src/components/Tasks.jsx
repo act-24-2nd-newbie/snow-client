@@ -46,17 +46,29 @@ function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChan
     );
   } else {
     return (
-      <li className="flex h-[60px] items-center gap-3 rounded bg-white px-4" onClick={handleWrapperClick} role="button">
+      <li
+        className="flex h-[60px] cursor-pointer items-center gap-3 rounded bg-white px-4"
+        onClick={handleWrapperClick}
+      >
         <Checkbox checked={task.isDone} onClick={onCheckClick} />
-        <span className={cx(['grow font-medium', task.isDone && 'line-through opacity-60'])}>{task.contents}</span>
-        <span className="text-xs opacity-60">
+        <span
+          className={cx([
+            'max-w-full grow overflow-hidden overflow-ellipsis text-nowrap font-medium',
+            task.isDone && 'line-through opacity-60',
+          ])}
+          title={task.contents}
+        >
+          {task.contents}
+        </span>
+        <span className="shrink-0 text-xs opacity-60">
           Created: {getDateString(task.createdAt)}
           {task.createdAt !== task.modifiedAt && ` (Modified: ${getDateString(task.modifiedAt)})`}
         </span>
         <button
           type="button"
-          className="flex h-6 w-6 items-center justify-center rounded-full bg-red-500 hover:bg-red-700"
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500 hover:bg-red-700"
           onClick={handleDeleteClick}
+          title="delete"
         >
           <Trash2 className="h-4 w-4 text-white" />
         </button>

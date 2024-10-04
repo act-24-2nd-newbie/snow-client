@@ -23,7 +23,7 @@ export default function Checkbox({ checked, onClick }) {
     <button
       type="button"
       onClick={handleClick}
-      className={cx(['rounded-full', checked ? 'hover:bg-primary/10' : 'hover:bg-secondary/10'])}
+      className={cx(['shrink-0 rounded-full', checked ? 'hover:bg-primary/10' : 'hover:bg-secondary/10'])}
     >
       {checked ? (
         <img src={checkedBox} alt="checked checkbox" width={28} height={28} />
