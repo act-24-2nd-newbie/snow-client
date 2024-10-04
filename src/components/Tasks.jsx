@@ -54,13 +54,13 @@ function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChan
         <span
           className={cx([
             'max-w-full grow overflow-hidden overflow-ellipsis text-nowrap font-medium',
-            task.isDone && 'line-through opacity-60',
+            task.isDone && 'text-black/60 line-through',
           ])}
           title={task.contents}
         >
           {task.contents}
         </span>
-        <span className="shrink-0 text-xs opacity-60">
+        <span className="shrink-0 text-xs text-black/60">
           Created: {getDateString(task.createdAt)}
           {task.createdAt !== task.modifiedAt && ` (Modified: ${getDateString(task.modifiedAt)})`}
         </span>
