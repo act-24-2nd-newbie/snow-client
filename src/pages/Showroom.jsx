@@ -1,7 +1,7 @@
-import Button from '@/components/Button';
-import Dropdown from '@/components/Drowdown';
+import Button from '@/components/ui/Button';
+import Dropdown from '@/components/ui/Drowdown';
 import Header from '@/components/Header';
-import TextField from '@/components/TextField';
+import TextField from '@/components/ui/TextField';
 
 function TextHeader({ children }) {
   return <h1 className="text-xl font-bold">{children}</h1>;

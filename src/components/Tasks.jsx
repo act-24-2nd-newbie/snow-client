@@ -2,8 +2,8 @@ import { cx } from 'class-variance-authority';
 import { Trash2 } from 'lucide-react';
 
 import { getDateString } from '@/utils/dateUtil';
-import Checkbox from './Checkbox';
-import TextField from './TextField';
+import Checkbox from './ui/Checkbox';
+import TextField from './ui/TextField';
 import { useEffect, useRef } from 'react';
 
 /**

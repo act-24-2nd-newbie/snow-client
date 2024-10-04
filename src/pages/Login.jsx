@@ -1,6 +1,6 @@
 import Header from '@/components/Header';
 import HeaderButton from '@/components/HeaderButton';
-import TextField from '@/components/TextField';
+import TextField from '@/components/ui/TextField';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
