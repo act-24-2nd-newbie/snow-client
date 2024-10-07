@@ -10,6 +10,8 @@ import Dropdown from '@/components/ui/Drowdown';
 import { getWelcomeMessage } from '@/utils/dateUtil';
 import HeaderButton from '@/components/HeaderButton';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/utils/toast';
+import { COMPLETE_MESSAGE, CREATE_MESSAGE, DELETE_ALL_MESSAGE, DELETE_MESSAGE, UPDATE_MESSAGE } from '@/utils/message';
 
 /** @satisfies {DropdownItem[]} */
 const SORT_ORDER = [
@@ -23,6 +25,8 @@ export default function Home() {
   const [newTask, setNewTask] = useState('');
   const [sortOrder, setSortOrder] = useState(SORT_ORDER[0].value);
   const navigate = useNavigate();
+
+  const { addToast } = useToast();
 
   const sortedTasks = useMemo(() => {
     if (sortOrder === '1') {
@@ -51,6 +55,7 @@ export default function Home() {
     if (newTask.trim()) {
       try {
         await createTask({ contents: newTask });
+        addToast(CREATE_MESSAGE);
         setNewTask('');
         fetchData();
       } catch (e) {
@@ -65,12 +70,16 @@ export default function Home() {
    */
   async function handleCheckClick(id, checked) {
     await updateTask(id, { isDone: checked });
+    if (checked) {
+      addToast(COMPLETE_MESSAGE);
+    }
     fetchData();
   }
 
   /** @param {number} id  */
   async function handleDeleteClick(id) {
     await deleteTask(id);
+    addToast(DELETE_MESSAGE);
     fetchData();
   }
 
@@ -113,6 +122,7 @@ export default function Home() {
     if (target) {
       if (target.changedContents && target.contents !== target.changedContents) {
         await updateTask(id, { contents: target.changedContents });
+        addToast(UPDATE_MESSAGE);
         fetchData();
       }
     }
@@ -120,6 +130,7 @@ export default function Home() {
 
   async function handleDeleteAllClick() {
     await deleteTasks();
+    addToast(DELETE_ALL_MESSAGE);
     setTasks([]);
   }
 

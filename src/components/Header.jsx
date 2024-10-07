@@ -32,6 +32,9 @@ export default function Header({ rightArea }) {
           <Link to="/" className="text-2xl font-bold text-white">
             My Todo
           </Link>
+          <Link to="/showroom" className="text-white">
+            Showroom
+          </Link>
         </div>
         {/* RIGHT */}
         <div className="flex items-center gap-4">
