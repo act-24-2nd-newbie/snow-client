@@ -35,6 +35,9 @@ export default function Header({ rightArea }) {
           <Link to="/showroom" className="text-white">
             Showroom
           </Link>
+          <Link to="/test" className="text-white">
+            Test
+          </Link>
         </div>
         {/* RIGHT */}
         <div className="flex items-center gap-4">

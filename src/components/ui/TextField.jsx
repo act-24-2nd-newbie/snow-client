@@ -24,7 +24,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
   const value = outer ?? inner;
 
   useEffect(() => {
-    selected && inputRef.current && inputRef.current.focus();
+    selected && inputRef.current?.focus();
   }, [selected]);
 
   /** @param {import('react').ChangeEvent<HTMLInputElement>} e */
@@ -60,7 +60,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
           <input
             className={cx([
               'w-full py-1 pr-6 outline-none transition-colors focus:placeholder:invisible',
-              !border && 'border-b border-b-secondary focus:border-b-primary',
+              { 'border-b border-b-secondary focus:border-b-primary': !border },
             ])}
             value={value}
             placeholder={placeholder}
@@ -76,7 +76,7 @@ export default function TextField({ value: outer, placeholder, maxLength, border
             </button>
           )}
         </div>
-        <button type="button" disabled={!value} onClick={handleSendClick}>
+        <button className="shrink-0" type="button" disabled={!value} onClick={handleSendClick}>
           <SendHorizonal className={cx(['h-6 w-6 transition-colors', value ? 'text-primary' : 'text-secondary'])} />
         </button>
       </div>

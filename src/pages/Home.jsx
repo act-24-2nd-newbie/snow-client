@@ -30,9 +30,9 @@ export default function Home() {
 
   const sortedTasks = useMemo(() => {
     if (sortOrder === '1') {
-      return tasks.toSorted((a, b) => a.createdAt - b.createdAt);
+      return tasks.toSorted((a, b) => a.createdDate - b.createdDate);
     } else {
-      return tasks.toSorted((a, b) => b.createdAt - a.createdAt);
+      return tasks.toSorted((a, b) => b.createdDate - a.createdDate);
     }
   }, [tasks, sortOrder]);
 

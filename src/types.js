@@ -3,8 +3,8 @@
  * @prop {number} id
  * @prop {string} contents
  * @prop {boolean} isDone
- * @prop {number} createdAt
- * @prop {number} modifiedAt
+ * @prop {number} createdDate
+ * @prop {number} modifiedDate
  */
 
 /**

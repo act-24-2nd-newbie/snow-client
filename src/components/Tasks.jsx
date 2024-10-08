@@ -21,6 +21,7 @@ import { useEffect, useRef } from 'react';
  * @param {TaskItemProps} param0
  */
 function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChange, onSend }) {
+  /** @param {import('react').MouseEvent<HTMLLIElement>} e  */
   function handleWrapperClick(e) {
     e.stopPropagation();
     onClick?.();
@@ -61,8 +62,8 @@ function TaskItem({ task, selected, onCheckClick, onDeleteClick, onClick, onChan
           {task.contents}
         </span>
         <span className="shrink-0 text-xs text-black/60">
-          Created: {getDateString(task.createdAt)}
-          {task.createdAt !== task.modifiedAt && ` (Modified: ${getDateString(task.modifiedAt)})`}
+          Created: {getDateString(task.createdDate)}
+          {task.createdDate !== task.modifiedDate && ` (Modified: ${getDateString(task.modifiedDate)})`}
         </span>
         <button
           type="button"
