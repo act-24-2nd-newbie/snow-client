@@ -10,6 +10,7 @@ export default {
         primary: '#2A82F0',
         'primary-hover': 'color-mix(in srgb, #2a82f0 80%, black 20%)',
         secondary: '#CCCCCC',
+        warn: '#D15050',
         'welcome-foreground': '#2C3E50',
         tasks: '#F4F4F4',
       },

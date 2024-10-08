@@ -49,8 +49,14 @@ export default function Showroom() {
         </div>
         <div className="flex flex-col gap-3 py-2">
           <TextHeader>TextField</TextHeader>
+          <h3 className="font-medium">Text without border</h3>
           <TextField />
+          <h3 className="font-medium">Text with border</h3>
           <TextField border />
+          <h3 className="font-medium">Email without border</h3>
+          <TextField type="email" />
+          <h3 className="font-medium">Email with border</h3>
+          <TextField border type="email" />
         </div>
         <div className="flex flex-col gap-3 py-2">
           <TextHeader>Dropdown</TextHeader>
