@@ -1,17 +1,27 @@
 import Header from '@/components/Header';
 import HeaderButton from '@/components/HeaderButton';
 import TextField from '@/components/ui/TextField';
+import { checkEmail } from '@/services/member';
+import { useToast } from '@/utils/toast';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const navigate = useNavigate();
+  const { addToast } = useToast();
 
-  function handleSend() {
-    if (name) {
-      sessionStorage.setItem('name', name);
-      navigate('/home');
+  async function handleSend() {
+    if (email) {
+      const res = await checkEmail(email);
+      if (res.ok) {
+        if (res.exists) {
+          sessionStorage.setItem('name', res.userName);
+          navigate('/home');
+        } else {
+          addToast('Not registered user.');
+        }
+      }
     }
   }
 
@@ -27,9 +37,15 @@ export default function Login() {
                 MyTodo makes it easy to stay organized and manage your life.
               </p>
             </div>
-            <p className="mt-6 text-[48px] font-bold text-welcome-foreground">What is your name?</p>
+            <p className="mt-6 text-[48px] font-bold text-welcome-foreground">What is your email?</p>
             <div className="mt-4 max-w-[680px]">
-              <TextField placeholder="Input your name" value={name} onChange={setName} onSend={handleSend} />
+              <TextField
+                type="email"
+                placeholder="Input your email"
+                value={email}
+                onChange={setEmail}
+                onSend={handleSend}
+              />
             </div>
           </div>
         </div>
