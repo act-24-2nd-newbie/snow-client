@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 
-const button = cva('rounded min-w-[90px] px-3 transition-colors disabled:pointer-events-none', {
+const button = cva('rounded px-3 transition-colors disabled:pointer-events-none flex items-center justify-center', {
   variants: {
     variant: {
       primary: 'border border-transparent bg-primary text-white disabled:bg-primary/30 hover:bg-primary-hover',
@@ -8,8 +8,8 @@ const button = cva('rounded min-w-[90px] px-3 transition-colors disabled:pointer
       ghost: 'border border-transparent hover:bg-black/[.08] disabled:text-black/20',
     },
     size: {
-      md: 'h-9',
-      sm: 'h-8',
+      md: 'h-9 min-w-[90px]',
+      sm: 'h-8 min-w-[69px]',
     },
   },
   defaultVariants: {

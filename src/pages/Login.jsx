@@ -17,7 +17,7 @@ export default function Login() {
 
   return (
     <>
-      <Header rightArea={<HeaderButton>Sign up</HeaderButton>} />
+      <Header rightArea={<HeaderButton onClick={() => navigate('/signup')}>Sign up</HeaderButton>} />
       <main className="flex h-full grow flex-col overflow-y-auto py-[60px]">
         <div className="mx-auto w-full max-w-[1280px]">
           <div className="ml-[120px] mr-8">
@@ -29,13 +29,7 @@ export default function Login() {
             </div>
             <p className="mt-6 text-[48px] font-bold text-welcome-foreground">What is your name?</p>
             <div className="mt-4 max-w-[680px]">
-              <TextField
-                placeholder="Input your name"
-                value={name}
-                onChange={setName}
-                onSend={handleSend}
-                maxLength={20}
-              />
+              <TextField placeholder="Input your name" value={name} onChange={setName} onSend={handleSend} />
             </div>
           </div>
         </div>

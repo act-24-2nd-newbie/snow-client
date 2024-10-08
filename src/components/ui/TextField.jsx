@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { cx } from 'class-variance-authority';
-import { SendHorizonal, X } from 'lucide-react';
+import { Check, SendHorizonal, X } from 'lucide-react';
 import Button from './Button';
 
 /**
@@ -8,45 +8,51 @@ import Button from './Button';
  *
  * @typedef {Object} TextFieldProps
  * @prop {string} [value]
+ * @prop {boolean} [valid]
  * @prop {'text' | 'email'} [type]
  * @prop {string} [placeholder]
- * @prop {number} [maxLength]
  * @prop {boolean} [border]
+ * @prop {boolean} [showSendButton]
  * @prop {boolean} [selected]
- * @prop {(value: string) => void} [onChange]
+ * @prop {string} [message]
+ * @prop {(value: string, valid: boolean) => void} [onChange]
  * @prop {() => void} [onSend]
  *
  * @param {TextFieldProps} param0
  */
 export default function TextField({
   value: outer,
+  valid: outerValid,
   type = 'text',
   placeholder,
-  maxLength,
   border,
+  showSendButton = true,
   selected,
+  message = '',
   onChange,
   onSend,
 }) {
   const id = useId();
   const [inner, setInner] = useState('');
-  const [valid, setValid] = useState(true);
+  const [innerValid, setInnerValid] = useState(true);
 
   /** @type {ReturnType<typeof useRef<HTMLInputElement>>}  */
   const inputRef = useRef(null);
 
   const value = outer ?? inner;
+  const valid = outerValid ?? innerValid;
+
   const errorMsg = type === 'text' ? 'Invalid text format' : 'Invalid email format';
 
   /** @param {string} val  */
   function validate(val) {
     if (!val) {
-      setValid(true);
+      return true;
     } else {
       if (type === 'text') {
-        setValid(/^[a-zA-Z0-9\s가-힣\u1100-\u11ff]+$/.test(val));
+        return /^[a-zA-Z0-9\s가-힣\u1100-\u11ff]+$/.test(val);
       } else if (type === 'email') {
-        setValid(/^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(val));
+        return /^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(val);
       }
     }
   }
@@ -55,11 +61,16 @@ export default function TextField({
     selected && inputRef.current?.focus();
   }, [selected]);
 
+  useEffect(() => {
+    if (!value) setInnerValid(true);
+  }, [value]);
+
   /** @param {import('react').ChangeEvent<HTMLInputElement>} e */
   function handleChange(e) {
     setInner(e.target.value);
-    validate(e.target.value);
-    onChange?.(e.target.value);
+    const v = validate(e.target.value);
+    setInnerValid(v);
+    onChange?.(e.target.value, v);
   }
 
   /** @param {import('react').MouseEvent<HTMLButtonElement>} e */
@@ -67,7 +78,7 @@ export default function TextField({
     e.stopPropagation();
 
     setInner('');
-    onChange?.('');
+    onChange?.('', true);
     inputRef.current?.focus();
   }
 
@@ -79,7 +90,9 @@ export default function TextField({
   }
 
   function handleSendClick() {
-    onSend?.();
+    if (valid) {
+      onSend?.();
+    }
   }
 
   return (
@@ -103,7 +116,6 @@ export default function TextField({
               ])}
               value={value}
               placeholder={placeholder}
-              maxLength={maxLength}
               onChange={handleChange}
               onKeyUp={handleKeyUp}
               id={id}
@@ -115,18 +127,32 @@ export default function TextField({
               </button>
             )}
           </div>
-          {type === 'text' ? (
-            <button className="shrink-0" type="button" disabled={!value} onClick={handleSendClick}>
-              <SendHorizonal className={cx(['h-6 w-6 transition-colors', value ? 'text-primary' : 'text-secondary'])} />
-            </button>
-          ) : (
-            <Button variant="secondary" size="sm" disabled={!value} onClick={handleSendClick}>
-              Check
-            </Button>
-          )}
+          {showSendButton &&
+            (type === 'text' ? (
+              <button className="shrink-0" type="button" disabled={!value} onClick={handleSendClick}>
+                <SendHorizonal
+                  className={cx(['h-6 w-6 transition-colors', value ? 'text-primary' : 'text-secondary'])}
+                />
+              </button>
+            ) : (
+              <Button variant="secondary" size="sm" disabled={!value} onClick={handleSendClick}>
+                {outerValid ? <Check className="text-primary" /> : 'Check'}
+              </Button>
+            ))}
         </div>
       </div>
-      {!valid && <p className="text-warn max-w-full overflow-hidden text-xs">{errorMsg}</p>}
+      {outerValid != null ? (
+        <p
+          className={cx('max-w-full overflow-hidden text-xs', {
+            'text-primary': outerValid,
+            'text-warn': !outerValid,
+          })}
+        >
+          {message}
+        </p>
+      ) : (
+        !innerValid && <p className="text-warn max-w-full overflow-hidden text-xs">{errorMsg}</p>
+      )}
     </div>
   );
 }

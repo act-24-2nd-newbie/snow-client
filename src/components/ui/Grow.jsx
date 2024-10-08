@@ -10,8 +10,8 @@ import { Apple } from 'lucide-react';
 export default function Grow({ show }) {
   return (
     <div
-      className={cx('h-10 w-10 overflow-hidden transition-[height]', {
-        'h-0': !show,
+      className={cx('w-10 overflow-hidden transition-[height]', {
+        'h-0': show === 0,
         'h-10 origin-top': show === 1,
         'h-0 origin-bottom': show === 2,
       })}

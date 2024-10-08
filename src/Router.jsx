@@ -3,6 +3,7 @@ import App from './App';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Showroom from './pages/Showroom';
+import SignUp from './pages/SignUp';
 import Test from './pages/Test';
 
 export const router = createBrowserRouter(
@@ -19,6 +20,7 @@ export const router = createBrowserRouter(
           return null;
         }}
       />
+      <Route path="/signup" element={<SignUp />} />
       <Route path="/showroom" element={<Showroom />} />
       <Route path="/test" element={<Test />} />
     </Route>,

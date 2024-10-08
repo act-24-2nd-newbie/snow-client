@@ -53,13 +53,11 @@ export default function Home() {
 
   async function handleSend() {
     if (newTask.trim()) {
-      try {
-        await createTask({ contents: newTask });
+      const res = await createTask({ contents: newTask });
+      if (res.ok) {
         addToast(CREATE_MESSAGE);
         setNewTask('');
         fetchData();
-      } catch (e) {
-        console.error(e);
       }
     }
   }
@@ -69,18 +67,22 @@ export default function Home() {
    * @param {boolean} checked
    */
   async function handleCheckClick(id, checked) {
-    await updateTask(id, { isDone: checked });
-    if (checked) {
-      addToast(COMPLETE_MESSAGE);
+    const res = await updateTask(id, { isDone: checked });
+    if (res.ok) {
+      if (checked) {
+        addToast(COMPLETE_MESSAGE);
+      }
+      fetchData();
     }
-    fetchData();
   }
 
   /** @param {number} id  */
   async function handleDeleteClick(id) {
-    await deleteTask(id);
-    addToast(DELETE_MESSAGE);
-    fetchData();
+    const res = await deleteTask(id);
+    if (res.ok) {
+      addToast(DELETE_MESSAGE);
+      fetchData();
+    }
   }
 
   /** @param {number} id */
@@ -121,17 +123,21 @@ export default function Home() {
     const target = tasks.filter((item) => item.id === id)[0];
     if (target) {
       if (target.changedContents && target.contents !== target.changedContents) {
-        await updateTask(id, { contents: target.changedContents });
-        addToast(UPDATE_MESSAGE);
-        fetchData();
+        const res = await updateTask(id, { contents: target.changedContents });
+        if (res.ok) {
+          addToast(UPDATE_MESSAGE);
+          fetchData();
+        }
       }
     }
   }
 
   async function handleDeleteAllClick() {
-    await deleteTasks();
-    addToast(DELETE_ALL_MESSAGE);
-    setTasks([]);
+    const res = await deleteTasks();
+    if (res.ok) {
+      addToast(DELETE_ALL_MESSAGE);
+      setTasks([]);
+    }
   }
 
   function handleLogoutClick() {
@@ -161,13 +167,7 @@ export default function Home() {
             <p className="text-2xl text-welcome-foreground">task(s) Today!</p>
           </div>
           <div className="mx-[60px] mb-6 mt-4">
-            <TextField
-              placeholder="Enter your task"
-              maxLength={100}
-              value={newTask}
-              onChange={setNewTask}
-              onSend={handleSend}
-            />
+            <TextField placeholder="Enter your task" value={newTask} onChange={setNewTask} onSend={handleSend} />
           </div>
         </div>
         {/* Tasks Wrapper */}
