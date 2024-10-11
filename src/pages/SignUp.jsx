@@ -13,9 +13,8 @@ const initInput = {
   userName: '',
 };
 
-/** @type {{ valid: boolean | null; message: string }} */
+/** @type {{ valid?: 'valid' | 'invalid'; message: string }} */
 const initMsg = {
-  valid: null,
   message: '',
 };
 
@@ -41,16 +40,22 @@ export default function SignUp() {
     setUsernameValid(valid);
   }
 
+  function handleCancelClick() {
+    setInput({ ...initInput });
+    setMsg({ ...initMsg });
+    setUsernameValid(true);
+  }
+
   async function handleEmailSend() {
     if (input.email) {
-      const ret = await checkEmail(input.email);
-      if (ret.ok) {
-        if (ret.exists) {
+      const res = await checkEmail(input.email);
+      if (res.ok) {
+        if (res.id) {
           // error
-          setMsg({ valid: false, message: 'This email already exists.' });
+          setMsg({ message: 'This email already exists.', valid: 'invalid' });
         } else {
           // ok
-          setMsg({ valid: true, message: 'This email is available.' });
+          setMsg({ message: 'This email is available.', valid: 'valid' });
         }
       }
     }
@@ -79,8 +84,8 @@ export default function SignUp() {
                 type="email"
                 placeholder="E-mail"
                 value={input.email}
-                valid={msg.valid}
                 message={msg.message}
+                messageStatus={msg.valid}
                 onChange={handleEmailChange}
                 onSend={handleEmailSend}
               />
@@ -96,7 +101,7 @@ export default function SignUp() {
             </label>
           </div>
           <div className="mt-[32px] flex justify-end gap-2">
-            <Button variant="secondary" onClick={() => setInput({ ...initInput })}>
+            <Button variant="secondary" onClick={handleCancelClick}>
               Cancel
             </Button>
             <Button

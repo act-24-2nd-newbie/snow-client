@@ -15,7 +15,7 @@ export default function Login() {
     if (email) {
       const res = await checkEmail(email);
       if (res.ok) {
-        if (res.exists) {
+        if (res.id) {
           sessionStorage.setItem('name', res.userName);
           navigate('/home');
         } else {

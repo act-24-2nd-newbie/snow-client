@@ -6,43 +6,41 @@ import Button from './Button';
 /**
  * TextField component
  *
- * @typedef {Object} TextFieldProps
- * @prop {string} [value]
- * @prop {boolean} [valid]
+ * @typedef TextFieldProps
  * @prop {'text' | 'email'} [type]
+ * @prop {string} [value]
  * @prop {string} [placeholder]
  * @prop {boolean} [border]
- * @prop {boolean} [showSendButton]
  * @prop {boolean} [selected]
+ * @prop {boolean} [showSendButton]
  * @prop {string} [message]
+ * @prop {'valid'|'invalid'} [messageStatus]
  * @prop {(value: string, valid: boolean) => void} [onChange]
  * @prop {() => void} [onSend]
  *
  * @param {TextFieldProps} param0
  */
 export default function TextField({
-  value: outer,
-  valid: outerValid,
   type = 'text',
+  value: outer,
   placeholder,
-  border,
+  border = false,
+  selected = false,
   showSendButton = true,
-  selected,
   message = '',
+  messageStatus,
   onChange,
   onSend,
 }) {
   const id = useId();
   const [inner, setInner] = useState('');
-  const [innerValid, setInnerValid] = useState(true);
+  const [valid, setValid] = useState(true);
 
   /** @type {ReturnType<typeof useRef<HTMLInputElement>>}  */
   const inputRef = useRef(null);
 
   const value = outer ?? inner;
-  const valid = outerValid ?? innerValid;
-
-  const errorMsg = type === 'text' ? 'Invalid text format' : 'Invalid email format';
+  const defaultError = type === 'text' ? 'Invalid text format' : 'Invalid email format';
 
   /** @param {string} val  */
   function validate(val) {
@@ -62,15 +60,17 @@ export default function TextField({
   }, [selected]);
 
   useEffect(() => {
-    if (!value) setInnerValid(true);
+    if (!value) setValid(true);
   }, [value]);
 
   /** @param {import('react').ChangeEvent<HTMLInputElement>} e */
   function handleChange(e) {
     setInner(e.target.value);
     const v = validate(e.target.value);
-    setInnerValid(v);
-    onChange?.(e.target.value, v);
+    setValid(v);
+
+    const vv = messageStatus == null ? valid : messageStatus === 'valid';
+    onChange?.(e.target.value, vv);
   }
 
   /** @param {import('react').MouseEvent<HTMLButtonElement>} e */
@@ -78,19 +78,20 @@ export default function TextField({
     e.stopPropagation();
 
     setInner('');
+    setValid(true);
     onChange?.('', true);
     inputRef.current?.focus();
   }
 
   /** @param {import('react').KeyboardEvent<HTMLInputElement>} e */
   function handleKeyUp(e) {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && valid && messageStatus !== 'invalid') {
       onSend?.();
     }
   }
 
   function handleSendClick() {
-    if (valid) {
+    if (valid && messageStatus !== 'invalid') {
       onSend?.();
     }
   }
@@ -112,7 +113,7 @@ export default function TextField({
                 'w-full py-1 pr-6 outline-none transition-colors focus:placeholder:invisible',
                 { 'border-b': !border },
                 { 'border-b-secondary focus:border-b-primary': valid },
-                { 'border-b-warn': !valid },
+                { 'border-b-warn focus:border-b-warn': messageStatus === 'invalid' || !valid },
               ])}
               value={value}
               placeholder={placeholder}
@@ -136,22 +137,22 @@ export default function TextField({
               </button>
             ) : (
               <Button variant="secondary" size="sm" disabled={!value} onClick={handleSendClick}>
-                {outerValid ? <Check className="text-primary" /> : 'Check'}
+                {messageStatus === 'valid' ? <Check className="text-primary" /> : 'Check'}
               </Button>
             ))}
         </div>
       </div>
-      {outerValid != null ? (
+      {messageStatus != null ? (
         <p
           className={cx('max-w-full overflow-hidden text-xs', {
-            'text-primary': outerValid,
-            'text-warn': !outerValid,
+            'text-primary': messageStatus === 'valid',
+            'text-warn': messageStatus !== 'valid',
           })}
         >
           {message}
         </p>
       ) : (
-        !innerValid && <p className="text-warn max-w-full overflow-hidden text-xs">{errorMsg}</p>
+        !valid && <p className="max-w-full overflow-hidden text-xs text-warn">{defaultError}</p>
       )}
     </div>
   );

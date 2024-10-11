@@ -3,7 +3,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 /**
  * checkEmail
  * @param {string} email
- * @returns {Promise<{ exists?: boolean; userName?: string; ok: boolean }>}
+ * @returns {Promise<{ ok: boolean; id?: number; userName?: string; }>}
  */
 export async function checkEmail(email) {
   const res = await fetch(`${SERVER_URL}/members/check`, {
