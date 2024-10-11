@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+
 import { ListTodo } from 'lucide-react';
 
 function Clock() {
@@ -34,9 +35,6 @@ export default function Header({ rightArea }) {
           </Link>
           <Link to="/showroom" className="text-white">
             Showroom
-          </Link>
-          <Link to="/test" className="text-white">
-            Test
           </Link>
         </div>
         {/* RIGHT */}
