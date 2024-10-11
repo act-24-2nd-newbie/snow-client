@@ -1,17 +1,17 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import Button from '@/components/ui/Button';
 import EmptyTasks from '@/components/EmptyTasks';
 import Header from '@/components/Header';
+import HeaderButton from '@/components/HeaderButton';
 import Tasks from '@/components/Tasks';
+import Button from '@/components/ui/Button';
+import Dropdown from '@/components/ui/Drowdown';
 import TextField from '@/components/ui/TextField';
 import { createTask, deleteTask, deleteTasks, getTasks, updateTask } from '@/services/task';
-import Dropdown from '@/components/ui/Drowdown';
 import { getWelcomeMessage } from '@/utils/dateUtil';
-import HeaderButton from '@/components/HeaderButton';
-import { useNavigate } from 'react-router-dom';
-import { useToast } from '@/utils/toast';
 import { COMPLETE_MESSAGE, CREATE_MESSAGE, DELETE_ALL_MESSAGE, DELETE_MESSAGE, UPDATE_MESSAGE } from '@/utils/message';
+import { useToast } from '@/utils/toast';
 
 /** @satisfies {DropdownItem[]} */
 const SORT_ORDER = [
@@ -28,6 +28,9 @@ export default function Home() {
 
   const { addToast } = useToast();
 
+  const id = parseInt(sessionStorage.getItem('id'));
+  const name = sessionStorage.getItem('name');
+
   const sortedTasks = useMemo(() => {
     if (sortOrder === '1') {
       return tasks.toSorted((a, b) => a.createdDate - b.createdDate);
@@ -36,21 +39,21 @@ export default function Home() {
     }
   }, [tasks, sortOrder]);
 
+  const fetchData = useCallback(
+    async function () {
+      try {
+        const items = await getTasks(id);
+        setTasks(items.map((item) => ({ ...item, selected: false })));
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [id],
+  );
+
   useEffect(() => {
     fetchData();
-  }, []);
-
-  const id = parseInt(sessionStorage.getItem('id'));
-  const name = sessionStorage.getItem('name');
-
-  async function fetchData() {
-    try {
-      const items = await getTasks();
-      setTasks(items.map((item) => ({ ...item, selected: false })));
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  }, [fetchData]);
 
   async function handleSend() {
     if (newTask.trim()) {

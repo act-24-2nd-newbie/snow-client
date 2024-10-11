@@ -16,10 +16,11 @@ export async function createTask(data) {
 
 /**
  * getTasks
+ * @param {number} memberId
  * @returns {Promise<Task[]>}
  */
-export async function getTasks() {
-  const res = await fetch(`${SERVER_URL}/tasks`, {
+export async function getTasks(memberId) {
+  const res = await fetch(`${SERVER_URL}/tasks/member/${memberId}`, {
     method: 'get',
   });
   return await res.json();
