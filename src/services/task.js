@@ -2,7 +2,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 /**
  * createTask
- * @param {{ contents: string }} data
+ * @param {{ memberId: number; contents: string }} data
  */
 export async function createTask(data) {
   return await fetch(`${SERVER_URL}/tasks`, {

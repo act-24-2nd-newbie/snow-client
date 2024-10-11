@@ -17,6 +17,7 @@ export default function Login() {
       if (res.ok) {
         if (res.id) {
           sessionStorage.setItem('name', res.userName);
+          sessionStorage.setItem('id', `${res.id}`);
           navigate('/home');
         } else {
           addToast('Not registered user.');

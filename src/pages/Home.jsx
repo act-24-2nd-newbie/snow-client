@@ -40,6 +40,7 @@ export default function Home() {
     fetchData();
   }, []);
 
+  const id = parseInt(sessionStorage.getItem('id'));
   const name = sessionStorage.getItem('name');
 
   async function fetchData() {
@@ -53,7 +54,7 @@ export default function Home() {
 
   async function handleSend() {
     if (newTask.trim()) {
-      const res = await createTask({ contents: newTask });
+      const res = await createTask({ memberId: id, contents: newTask });
       if (res.ok) {
         addToast(CREATE_MESSAGE);
         setNewTask('');
