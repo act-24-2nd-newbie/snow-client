@@ -48,7 +48,7 @@ export default function TextField({
       return true;
     } else {
       if (type === 'text') {
-        return /^[a-zA-Z0-9\s가-힣\u1100-\u11ff]+$/.test(val);
+        return /^[a-zA-Z0-9\s가-힣\u3130-\u318F.,?@!'"]+$/.test(val);
       } else if (type === 'email') {
         return /^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(val);
       }

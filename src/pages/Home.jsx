@@ -91,12 +91,16 @@ export default function Home() {
 
   /** @param {number} id */
   function handleClick(id) {
-    setTasks(
-      tasks.map((item) => ({
-        ...item,
-        selected: !item.isDone && item.id === id,
-      })),
-    );
+    // get state of clicked item
+    const { isDone } = tasks.filter((t) => t.id === id)[0];
+    if (!isDone) {
+      setTasks(
+        tasks.map((item) => ({
+          ...item,
+          selected: !item.isDone && item.id === id,
+        })),
+      );
+    }
   }
 
   /**
