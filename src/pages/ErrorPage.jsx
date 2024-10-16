@@ -13,11 +13,11 @@ import Header from '@/components/Header.jsx';
  */
 export default function ErrorPage() {
   /** @type {ErrorResponse} */
-  const error = useRouteError();
+  const routerError = useRouteError();
 
   let errorImg;
 
-  if (error.status === 404) {
+  if (routerError?.status === 404) {
     errorImg = <img src={imgNotFound} alt="not found" />;
   } else {
     errorImg = <img src={imgError} alt="error" />;

@@ -1,9 +1,11 @@
+import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+
 import Button from '@/components/ui/Button';
 import Dropdown from '@/components/ui/Drowdown';
 import Header from '@/components/Header';
 import TextField from '@/components/ui/TextField';
 import { useToast } from '@/utils/toast';
-import { useState } from 'react';
 import Grow from '@/components/ui/Grow';
 
 function TextHeader({ children }) {
@@ -18,6 +20,9 @@ export default function Showroom() {
   const [items, setItems] = useState([]);
 
   const { addToast } = useToast();
+  /** @type {Task[]} */
+  const data = useLoaderData();
+
   function handleAddToastClick() {
     addToast('Toast Message ' + Math.floor(Math.random() * 100));
   }
@@ -28,23 +33,28 @@ export default function Showroom() {
       <main className="h-full overflow-auto">
         <div className="mx-auto w-full max-w-[1280px] py-4">
           <div className="flex flex-col gap-3 py-2">
+            <TextHeader>Loader</TextHeader>
+            <p>{data.length}</p>
+          </div>
+
+          <div className="flex flex-col gap-3 py-2">
             <TextHeader>Buttons</TextHeader>
             <ButtonWrapper>
-              <Button variant="ghost">Clear</Button>
+              <Button variant="ghost">GHOST</Button>
               <Button variant="ghost" disabled>
-                Clear
+                GHOST
               </Button>
             </ButtonWrapper>
             <ButtonWrapper>
-              <Button variant="primary">Clear</Button>
+              <Button variant="primary">PRIMARY</Button>
               <Button variant="primary" disabled>
-                Clear
+                PRIMARY
               </Button>
             </ButtonWrapper>
             <ButtonWrapper>
-              <Button variant="secondary">Clear</Button>
+              <Button variant="secondary">SECONDARY</Button>
               <Button variant="secondary" disabled>
-                Clear
+                SECONDARY
               </Button>
             </ButtonWrapper>
           </div>
@@ -56,8 +66,6 @@ export default function Showroom() {
             <TextField border />
             <h3 className="font-medium">Email without border</h3>
             <TextField type="email" />
-            <h3 className="font-medium">Email with border</h3>
-            <TextField border type="email" />
           </div>
           <div className="flex flex-col gap-3 py-2">
             <TextHeader>Dropdown</TextHeader>

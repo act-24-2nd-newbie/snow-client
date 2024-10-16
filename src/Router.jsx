@@ -22,7 +22,12 @@ export const router = createBrowserRouter(
         }}
       />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/showroom" element={<Showroom />} />
+      <Route
+        path="/showroom"
+        loader={() => fetch('http://localhost:8090/api/v1/tasks/member/4').then((res) => res.json())}
+        element={<Showroom />}
+      />
+      <Route path="/500" element={<ErrorPage />} />
     </Route>,
   ),
 );
