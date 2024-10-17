@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Showroom from './pages/Showroom';
 import SignUp from './pages/SignUp';
+import { getTasks } from '@/services/task.js';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,11 +23,7 @@ export const router = createBrowserRouter(
         }}
       />
       <Route path="/signup" element={<SignUp />} />
-      <Route
-        path="/showroom"
-        loader={() => fetch('http://localhost:8090/api/v1/tasks/member/4').then((res) => res.json())}
-        element={<Showroom />}
-      />
+      <Route path="/showroom" loader={() => getTasks(1)} element={<Showroom />} />
       <Route path="/500" element={<ErrorPage />} />
     </Route>,
   ),
