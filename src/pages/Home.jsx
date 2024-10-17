@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate, useRevalidator } from 'react-router-dom';
 
 import EmptyTasks from '@/components/EmptyTasks';
 import Header from '@/components/Header';
@@ -8,7 +8,7 @@ import Tasks from '@/components/Tasks';
 import Button from '@/components/ui/Button';
 import Dropdown from '@/components/ui/Drowdown';
 import TextField from '@/components/ui/TextField';
-import { createTask, deleteTask, deleteTasks, getTasks, updateTask } from '@/services/task';
+import { createTask, deleteTask, deleteTasks, updateTask } from '@/services/task';
 import { getWelcomeMessage } from '@/utils/dateUtil';
 import { COMPLETE_MESSAGE, CREATE_MESSAGE, DELETE_ALL_MESSAGE, DELETE_MESSAGE, UPDATE_MESSAGE } from '@/utils/message';
 import { useToast } from '@/utils/toast';
@@ -25,6 +25,8 @@ export default function Home() {
   const [newTask, setNewTask] = useState('');
   const [sortOrder, setSortOrder] = useState(SORT_ORDER[0].value);
   const navigate = useNavigate();
+  const loadedTasks = useLoaderData();
+  const revalidator = useRevalidator();
 
   const { addToast } = useToast();
 
@@ -40,15 +42,11 @@ export default function Home() {
   }, [tasks, sortOrder]);
 
   const fetchData = useCallback(
-    async function () {
-      try {
-        const items = await getTasks(id);
-        setTasks(items.map((item) => ({ ...item, selected: false })));
-      } catch (e) {
-        console.error(e);
-      }
+    function () {
+      revalidator.revalidate();
+      setTasks(loadedTasks.map((item) => ({ ...item, selected: false })));
     },
-    [id],
+    [revalidator, loadedTasks],
   );
 
   useEffect(() => {

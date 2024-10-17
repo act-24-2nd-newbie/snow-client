@@ -19,7 +19,9 @@ export const router = createBrowserRouter(
           if (!sessionStorage.getItem('name')) {
             return redirect('/');
           }
-          return null;
+
+          const id = sessionStorage.getItem('id');
+          return getTasks(parseInt(id));
         }}
       />
       <Route path="/signup" element={<SignUp />} />
